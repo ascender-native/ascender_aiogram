@@ -8,16 +8,14 @@ version = "0.1.0"
 description = ""
 authors = ["AscenderNative Core"]
 readme = "README.md"
-packages = [{include = "app"}]
-# name = "ascaiogram"
-# version = "0.1"
-# description = ""
-# authors = ["Your Name <you@example.com>"]
-# include = ["src/*"]
-# readme = "README.md"
+packages = [{include = "ascaiogram"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
+# asccore = { git = "https://github.com/ascender-native/ascender_core.git", tag = "v0.1.0" }
+asccore = "*"
+ascender = "*"
+aiogram = "^3"
 
 [tool.poetry.plugins."poetry-dynamic-versioning"]
-version-file = "src/ascaiogram/__init__.py"
+version-file = "ascaiogram/__init__.py"

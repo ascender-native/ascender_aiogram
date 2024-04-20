@@ -1,13 +1,13 @@
-from core.contracts.foundation.application import Application
-from core.foundation.application import Application
-from core.foundation.support.providers.route_service import RouteServiceProvider as BaseRouteServiceProvider
-from core.routing.router import Router
-from core.main import config
+from asccore.contracts.foundation.application import Application
+from asccore.foundation.application import Application
+from asccore.foundation.support.providers.route_service import RouteServiceProvider as BaseRouteServiceProvider
+from asccore.routing.router import Router
+from asccore.main import config
 
 from .controller import WebhookController
 
 from aiogram import Bot
-from core.foundation.console.console_kernel import ConsoleKernel
+from asccore.foundation.console.console_kernel import ConsoleKernel
 
 
 class TelegramBotProvider(BaseRouteServiceProvider):
@@ -55,5 +55,8 @@ class TelegramBotProvider(BaseRouteServiceProvider):
     # Helper method to setup routes
     def boot_router(self, router: Router):
         self.routers(routers=[
-            router.post(f"/{self.WEBHOOK_PATH}", WebhookController.bot).tags('webhooks').name('webhook.bot.telegram')
+            router.post(f"/{self.WEBHOOK_PATH}", self.boot_router_controller()).tags('webhooks').name('webhook.bot.telegram')
         ])
+
+    def boot_router_controller(self):
+        return WebhookController.bot

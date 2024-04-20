@@ -1,7 +1,7 @@
-from core.main import cli, click, config, app
+from asccore.main import cli, click, config, app
 from typing import Any
 
-from core.routing.router import Router
+from asccore.routing.router import Router
 from aiogram import Bot
 
 import asyncio
@@ -26,3 +26,4 @@ def set_webhook_telegram(url: str|None = None, ip_address: str|None = None,  max
     )
 
     asyncio.run(set_webhook_task)
+    

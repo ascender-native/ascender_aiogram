@@ -1,6 +1,6 @@
 from aiogram import Bot, Dispatcher
 from aiogram.types import Update
-from core.main import app
+from asccore.main import app
 from .handler.base import router
 from pydantic import BaseModel
 
