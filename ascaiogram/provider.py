@@ -15,7 +15,7 @@ class TelegramBotProvider(BaseRouteServiceProvider):
     def __init__(self, app: Application):
         super().__init__(app)
             # Define the path for the webhook which includes a placeholder for the bot token.
-        self.WEBHOOK_PATH = config('bot.telegram.default.webhooks.url')
+        # self.WEBHOOK_PATH = config('bot.telegram.default.webhooks.name')
 
     # Composite service provider to register all necessary components for the bot
     async def register(self):
@@ -35,28 +35,15 @@ class TelegramBotProvider(BaseRouteServiceProvider):
         token = config('bot.telegram.default.token')  # Retrieve the bot token from the configuration
         if token:
             self.app.bind(Bot, lambda: Bot(token=token))  # Register bot services
-            await self.register_webhook(token)  # Setup the webhook
+            # await self.register_webhook(token)  # Setup the webhook
 
     # Method to register and update the webhook configuration
     async def register_webhook(self, token: str):
         bot: Bot = self.app.make(Bot)
-        webhook_info = await bot.get_webhook_info()
+        # webhook_info = await bot.get_webhook_info()
 
-        telegram_url = config('bot.telegram.default.url')
-        webhook_url = f"{telegram_url}/{self.WEBHOOK_PATH.replace('{token}', token)}"
-        if webhook_info.url != webhook_url:
-            info = await bot.set_webhook(url=webhook_url)  # Update the webhook if necessary
-            print(info)
-
-     # Method called to initialize routing
-    def boot(self):
-        self.boot_router(self.app.make(Router))
-        
-    # Helper method to setup routes
-    def boot_router(self, router: Router):
-        self.routers(routers=[
-            router.post(f"/{self.WEBHOOK_PATH}", self.boot_router_controller()).tags('webhooks').name('webhook.bot.telegram')
-        ])
-
-    def boot_router_controller(self):
-        return WebhookController.bot
+        # telegram_url = config('bot.telegram.default.url')
+        # webhook_url = f"{telegram_url}/{self.WEBHOOK_PATH.replace('{token}', token)}"
+        # if webhook_info.url != webhook_url:
+        #     info = await bot.set_webhook(url=webhook_url)  # Update the webhook if necessary
+        #     print(info)
